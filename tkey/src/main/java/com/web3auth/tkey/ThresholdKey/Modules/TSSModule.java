@@ -703,8 +703,14 @@ public final class TSSModule {
             JSONObject resultJson = null;
             try {
                 resultJson = new JSONObject(resultData.get());
+                JSONObject deviceShareJson = resultJson;
+                try {
+                    //  backward compatible
+                    deviceShareJson = resultJson.getJSONObject("deviceShare");
+                } catch ( JSONException _e) {
+                    // pass through
+                }
 
-                JSONObject deviceShareJson = resultJson.getJSONObject("deviceShare");
                 JSONObject shareJson = deviceShareJson.getJSONObject("share");
                 shareIndex.set(shareJson.get("shareIndex").toString());
             } catch (JSONException e) {
