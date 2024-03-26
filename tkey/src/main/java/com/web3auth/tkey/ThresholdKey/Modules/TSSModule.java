@@ -679,7 +679,7 @@ public final class TSSModule {
         String x = result.getFinalKeyData().getX();
         String y = result.getFinalKeyData().getY();
         List<BigInteger> nodeIndexes = result.getNodesData().getNodeIndexes();
-        List<Integer> nodeIndexList = nodeIndexes.stream()
+        List<Integer> nodeIndexList = nodeIndexes.stream().sorted()
                 .map(BigInteger::intValue)
                 .collect(Collectors.toList());
 
