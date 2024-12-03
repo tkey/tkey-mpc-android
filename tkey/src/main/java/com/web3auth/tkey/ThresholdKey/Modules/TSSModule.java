@@ -16,8 +16,7 @@ import org.torusresearch.fetchnodedetails.types.NodeDetails;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.torusresearch.torusutils.TorusUtils;
-import org.torusresearch.torusutils.types.TorusPublicKey;
-import org.torusresearch.torusutils.types.VerifierArgs;
+import org.torusresearch.torusutils.types.common.TorusPublicKey;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -669,19 +668,11 @@ public final class TSSModule {
         String[] split = extendedVerifierId.split("\u001c");
         String extendedVerifierIdFormatted = split[1] + "\u0015" + tssTag + "\u0016" + nonce;
 
-        VerifierArgs verifierArgs = new VerifierArgs(
-            split[0],
-            split[1],
-            extendedVerifierIdFormatted
-        );
-        TorusPublicKey result = torusUtils.getPublicAddress(nodeDetails.getTorusNodeEndpoints(), nodeDetails.getTorusNodePub(), verifierArgs).get();
+        TorusPublicKey result = torusUtils.getPublicAddress(nodeDetails.getTorusNodeEndpoints(), split[0], split[1], extendedVerifierIdFormatted);
 
         String x = result.getFinalKeyData().getX();
         String y = result.getFinalKeyData().getY();
-        List<BigInteger> nodeIndexes = result.getNodesData().getNodeIndexes();
-        List<Integer> nodeIndexList = nodeIndexes.stream()
-                .map(BigInteger::intValue)
-                .collect(Collectors.toList());
+        List<Integer> nodeIndexList  = result.getNodesData().getNodeIndexes();
 
         TSSPubKeyResult.Point pubKey = new TSSPubKeyResult.Point(x, y);
         return new TSSPubKeyResult(pubKey, nodeIndexList);

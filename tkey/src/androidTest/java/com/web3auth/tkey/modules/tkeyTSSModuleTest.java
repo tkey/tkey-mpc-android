@@ -26,11 +26,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.torusresearch.fetchnodedetails.FetchNodeDetails;
 import org.torusresearch.fetchnodedetails.types.NodeDetails;
-import org.torusresearch.fetchnodedetails.types.TorusNetwork;
+import org.torusresearch.fetchnodedetails.types.Web3AuthNetwork;
 import org.torusresearch.torusutils.TorusUtils;
-import org.torusresearch.torusutils.types.RetrieveSharesResponse;
-import org.torusresearch.torusutils.types.SessionToken;
-import org.torusresearch.torusutils.types.TorusCtorOptions;
+import org.torusresearch.torusutils.types.TorusUtilsExtraParams;
+import org.torusresearch.torusutils.types.VerifierParams;
+import org.torusresearch.torusutils.types.VerifyParams;
+import org.torusresearch.torusutils.types.common.SessionToken;
+import org.torusresearch.torusutils.types.common.TorusKey;
+import org.torusresearch.torusutils.types.common.TorusOptions;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -78,21 +81,17 @@ public class tkeyTSSModuleTest {
             String TORUS_TEST_EMAIL = "saasa2123@tr.us";
             String TORUS_TEST_VERIFIER = "torus-test-health";
 
-            FetchNodeDetails nodeManager = new FetchNodeDetails(TorusNetwork.SAPPHIRE_DEVNET);
+            FetchNodeDetails nodeManager = new FetchNodeDetails(Web3AuthNetwork.SAPPHIRE_DEVNET);
 
             CompletableFuture<NodeDetails> nodeDetailResult = nodeManager.getNodeDetails(TORUS_TEST_VERIFIER, TORUS_TEST_EMAIL);
             NodeDetails nodeDetail = nodeDetailResult.get();
 
-            TorusCtorOptions torusOptions = new TorusCtorOptions("Custom");
-            torusOptions.setNetwork(TorusNetwork.SAPPHIRE_DEVNET.toString());
-            torusOptions.setClientId("BG4pe3aBso5SjVbpotFQGnXVHgxhgOxnqnNBKyjfEJ3izFvIVWUaMIzoCrAfYag8O6t6a6AOvdLcS4JR2sQMjR4");
-            TorusUtils torusUtils = new TorusUtils(torusOptions);
+            TorusOptions options = new TorusOptions("BG4pe3aBso5SjVbpotFQGnXVHgxhgOxnqnNBKyjfEJ3izFvIVWUaMIzoCrAfYag8O6t6a6AOvdLcS4JR2sQMjR4", Web3AuthNetwork.SAPPHIRE_DEVNET, null, null, true);
+            TorusUtils torusUtils = new TorusUtils(options);
 
             String idToken = JwtUtils.generateIdToken(TORUS_TEST_EMAIL);
 
-            RetrieveSharesResponse retrievedShare = torusUtils.retrieveShares(nodeDetail.getTorusNodeEndpoints(), nodeDetail.getTorusIndexes(), TORUS_TEST_VERIFIER, new HashMap<String, Object>() {{
-                put("verifier_id", TORUS_TEST_EMAIL);
-            }} , idToken).get();
+            TorusKey retrievedShare = torusUtils.retrieveShares(nodeDetail.getTorusNodeEndpoints(), TORUS_TEST_VERIFIER, null, idToken, null);
 
             ArrayList<String> signatureString = new ArrayList<>();
             List<SessionToken> signature = retrievedShare.getSessionData().getSessionTokenData();
@@ -377,24 +376,19 @@ public class tkeyTSSModuleTest {
             String TORUS_TEST_EMAIL = "saasa2123@tr.us";
             String TORUS_TEST_VERIFIER = "torus-test-health";
 
-            FetchNodeDetails nodeManager = new FetchNodeDetails(TorusNetwork.SAPPHIRE_DEVNET);
+            FetchNodeDetails nodeManager = new FetchNodeDetails(Web3AuthNetwork.SAPPHIRE_DEVNET);
 
             CompletableFuture<NodeDetails> nodeDetailResult = nodeManager.getNodeDetails(TORUS_TEST_VERIFIER, TORUS_TEST_EMAIL);
             NodeDetails nodeDetail = nodeDetailResult.get();
 
-            TorusCtorOptions torusOptions = new TorusCtorOptions("Custom");
-            torusOptions.setNetwork(TorusNetwork.SAPPHIRE_DEVNET.toString());
-            torusOptions.setClientId("BG4pe3aBso5SjVbpotFQGnXVHgxhgOxnqnNBKyjfEJ3izFvIVWUaMIzoCrAfYag8O6t6a6AOvdLcS4JR2sQMjR4");
-            TorusUtils torusUtils = new TorusUtils(torusOptions);
-
+            TorusOptions options = new TorusOptions("BG4pe3aBso5SjVbpotFQGnXVHgxhgOxnqnNBKyjfEJ3izFvIVWUaMIzoCrAfYag8O6t6a6AOvdLcS4JR2sQMjR4", Web3AuthNetwork.SAPPHIRE_DEVNET, null, null, true);
+            TorusUtils torusUtils = new TorusUtils(options);
             String idToken = JwtUtils.generateIdToken(TORUS_TEST_EMAIL);
 
-            RetrieveSharesResponse retrievedShare = torusUtils.retrieveShares(nodeDetail.getTorusNodeEndpoints(), nodeDetail.getTorusIndexes(), TORUS_TEST_VERIFIER, new HashMap<String, Object>() {{
-                put("verifier_id", TORUS_TEST_EMAIL);
-            }} , idToken).get();
+            TorusKey retrievedShare = torusUtils.retrieveShares(nodeDetail.getTorusNodeEndpoints(), TORUS_TEST_VERIFIER, null, idToken, null);
 
             ArrayList<String> signatureString = new ArrayList<>();
-            List<SessionToken> signature = retrievedShare.getSessionData().sessionTokenData;
+            List<SessionToken> signature = retrievedShare.getSessionData().getSessionTokenData();
 
             for (SessionToken item : signature) {
                 if (item != null) {

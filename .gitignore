@@ -17,3 +17,4 @@ local.properties
 coverage.ec
 coverage.exec
 coverage/
+.idea/misc.xml

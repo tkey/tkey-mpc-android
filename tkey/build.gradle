@@ -67,8 +67,8 @@ dependencies {
     testImplementation 'org.jacoco:org.jacoco.report:0.8.7'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    implementation 'com.github.grvgoel81:fetch-node-details-java:3.0.8'
-    implementation 'com.github.grvgoel81:torus-utils-java:5.0.0'
+    implementation 'org.torusresearch:fetch-node-details-java:5.0.0'
+    implementation 'org.torusresearch:torus-utils-java:4.0.3'
     implementation 'com.auth0:java-jwt:3.19.2'
 }
 
