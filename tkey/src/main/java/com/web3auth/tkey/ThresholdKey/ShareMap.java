@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public final class ShareMap {
 
-    private native void jniShareMapFree();
+    private native void jniShareMapFree(long ptr);
 
     private native String jniShareMapGetKeys(long ptr, RuntimeError error);
 
@@ -43,11 +43,6 @@ public final class ShareMap {
             array.add(result);
         }
         share_map = array;
-    }
-
-    @Override
-    protected void finalize() throws Throwable {
-        super.finalize();
-        jniShareMapFree();
+        jniShareMapFree(ptr);
     }
 }

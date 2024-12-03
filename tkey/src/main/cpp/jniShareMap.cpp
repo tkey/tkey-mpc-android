@@ -4,9 +4,8 @@
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_web3auth_tkey_ThresholdKey_ShareMap_jniShareMapFree(JNIEnv *env, jobject jthis) {
-    jlong pObject = GetPointerField(env, jthis);
-    auto *pMap = reinterpret_cast<ShareMap *>(pObject);
+Java_com_web3auth_tkey_ThresholdKey_ShareMap_jniShareMapFree(JNIEnv *env, jobject jthis, jlong ptr) {
+    auto *pMap = reinterpret_cast<ShareMap *>(ptr);
     share_map_free(pMap);
 }
 

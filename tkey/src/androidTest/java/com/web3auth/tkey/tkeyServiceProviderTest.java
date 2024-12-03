@@ -12,7 +12,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.torusresearch.fetchnodedetails.FetchNodeDetails;
 import org.torusresearch.fetchnodedetails.types.NodeDetails;
-import org.torusresearch.fetchnodedetails.types.TorusNetwork;
+import org.torusresearch.fetchnodedetails.types.Web3AuthNetwork;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -43,7 +43,7 @@ public class tkeyServiceProviderTest {
         try {
             String TORUS_TEST_EMAIL = "saasa2123@tr.us";
             String TORUS_TEST_VERIFIER = "torus-test-health";
-            FetchNodeDetails nodeManager = new FetchNodeDetails(TorusNetwork.SAPPHIRE_DEVNET);
+            FetchNodeDetails nodeManager = new FetchNodeDetails(Web3AuthNetwork.SAPPHIRE_DEVNET);
 
             CompletableFuture<NodeDetails> nodeDetailResult = nodeManager.getNodeDetails(TORUS_TEST_VERIFIER, TORUS_TEST_EMAIL);
             NodeDetails nodeDetail = nodeDetailResult.get();
