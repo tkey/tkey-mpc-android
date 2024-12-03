@@ -672,7 +672,7 @@ public final class TSSModule {
 
         String x = result.getFinalKeyData().getX();
         String y = result.getFinalKeyData().getY();
-        List<Integer> nodeIndexList  = result.getNodesData().getNodeIndexes();
+        List<Integer> nodeIndexList  = result.getNodesData().getNodeIndexes().stream().sorted().collect(Collectors.toList());
 
         TSSPubKeyResult.Point pubKey = new TSSPubKeyResult.Point(x, y);
         return new TSSPubKeyResult(pubKey, nodeIndexList);
