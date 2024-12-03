@@ -90,8 +90,9 @@ public class tkeyTSSModuleTest {
             TorusUtils torusUtils = new TorusUtils(options);
 
             String idToken = JwtUtils.generateIdToken(TORUS_TEST_EMAIL);
-
-            TorusKey retrievedShare = torusUtils.retrieveShares(nodeDetail.getTorusNodeEndpoints(), TORUS_TEST_VERIFIER, null, idToken, null);
+            VerifyParams params = new VerifyParams(TORUS_TEST_EMAIL, idToken);
+            VerifierParams verifierParams = new VerifierParams(TORUS_TEST_EMAIL, null, null, new VerifyParams[] { params });
+            TorusKey retrievedShare = torusUtils.retrieveShares(nodeDetail.getTorusNodeEndpoints(), TORUS_TEST_VERIFIER, verifierParams, idToken, null);
 
             ArrayList<String> signatureString = new ArrayList<>();
             List<SessionToken> signature = retrievedShare.getSessionData().getSessionTokenData();
@@ -385,7 +386,10 @@ public class tkeyTSSModuleTest {
             TorusUtils torusUtils = new TorusUtils(options);
             String idToken = JwtUtils.generateIdToken(TORUS_TEST_EMAIL);
 
-            TorusKey retrievedShare = torusUtils.retrieveShares(nodeDetail.getTorusNodeEndpoints(), TORUS_TEST_VERIFIER, null, idToken, null);
+            VerifyParams params = new VerifyParams(TORUS_TEST_EMAIL, idToken);
+            VerifierParams verifierParams = new VerifierParams(TORUS_TEST_EMAIL, null, null, new VerifyParams[] { params });
+
+            TorusKey retrievedShare = torusUtils.retrieveShares(nodeDetail.getTorusNodeEndpoints(), TORUS_TEST_VERIFIER, verifierParams, idToken, null);
 
             ArrayList<String> signatureString = new ArrayList<>();
             List<SessionToken> signature = retrievedShare.getSessionData().getSessionTokenData();
