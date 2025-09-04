@@ -22,7 +22,7 @@ jobs:
           java-version: '11'
           distribution: temurin
       - name: Gradle cache
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v3
       - name: Test
         uses: reactivecircus/android-emulator-runner@v2
         with:
